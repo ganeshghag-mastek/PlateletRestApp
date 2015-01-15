@@ -1,0 +1,42 @@
+grails create-app PlateletRestApp
+
+cd PlateletRestApp
+
+grails create-domain-class com.mastek.rnd.tekathon.grails.plateletapp.DonationRequest
+String requestorName;
+String requestType;
+Date requiredInDays;
+String bloodGroup;
+String pincode;
+
+    static constraints = {
+    requestorName blank: false
+    requestType blank: false
+    bloodGroup blank: false
+    pincode blank: false
+    }
+
+
+
+grails create-domain-class com.mastek.rnd.tekathon.grails.plateletapp.Donor
+String donorName
+String bloodGroup
+Integer age
+Integer weight
+String address
+String pincode
+Integer donationFrequency
+Date lastDonationDate
+Boolean deferral
+String mobile
+String email
+
+
+
+grails create-domain-class com.mastek.rnd.tekathon.grails.plateletapp.DonorResponse
+String donorName
+String requestType
+String bloodGroup
+Boolean acceptFlag
+Long requestId
+

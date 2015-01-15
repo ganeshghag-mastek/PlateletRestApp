@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Platelet Donation Application: Stub Page</h2>
+<hr>
+
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="date.js"></script>
+<script type="text/javascript" src="myglobals.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+$(document).ready(function(){
+	console.log("from inside jquery init...");
+});
+
+
+function insertDonationReq(){
+    var req = {
+		"requestorName":"JohnDoe"+new Date().getTime(),
+		"requestType":"Platelets",
+		"requiredInDays": Date.today().toString('yyyy-MM-ddTHH:mm:ssZ'),
+		//"requiredInDays": "2015-01-09T06:31:01Z",
+		"bloodGroup":"B Positive",
+		"pincode":"400601"
+    }
+
+	test_ajax("POST",webcontext+"/donationRequests.json",req);
+}
+
+function insertDonorEntry(){
+    var donor = {
+		"donorName":"Donor Babu"+new Date().getTime(),
+		"bloodGroup":"B Positive",
+		"age":"56",
+		"weight":"75",
+		"address":"Some Address"+new Date().getTime(),
+		"pincode":"400604",
+		"donationFrequency":"3",
+		"lastDonationDate":Date.today().toString('yyyy-MM-ddTHH:mm:ssZ'),
+		"deferral":false,
+		"mobile":"9876543210",
+		"email":"some@app.com"
+    }
+
+	test_ajax("POST",webcontext+"/donors.json",donor);
+}
+
+function insertDonorReponse(){
+    var resp = {
+		"donorName":"Donor Ready"+new Date().getTime(),
+		"requestType":"Platelets",
+		"bloodGroup":"B Positive",
+		"acceptFlag":true,
+		"requestId":new Date().getTime()
+    }
+
+	test_ajax("POST",webcontext+"/donorResponses.json",resp);
+}
+
+
+function test_ajax(httpMethod, url, indata){
+	
+	$.ajax({
+		type: httpMethod,
+		url: url,
+		data: JSON.stringify(indata),
+		headers: { 
+	        'Content-Type': 'application/json' 
+	    },
+		success: function(mydata){
+			//console.log("from inside ajax get success ret = "+JSON.stringify(mydata));
+			$("#ret_data").html(JSON.stringify(mydata));
+			$("#id").html(mydata.id);
+		},
+		dataType: "json",
+		contentType: "applicaton/json"
+		
+		
+	});
+}
+
+
+</script>
+
+
+<input type="button" value="Insert Donation Request" onclick="insertDonationReq()">
+<p>
+<input type="button" value="Insert Donor Entry" onclick="insertDonorEntry()">
+<p>
+<input type="button" value="Insert Donor Response" onclick="insertDonorReponse()">
+<p>
+
+ID:<div id="id"></div>
+<p>
+RETDATA:<div id="ret_data"></div>
+</body>
+
+
+
+</html>
